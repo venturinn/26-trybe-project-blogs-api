@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-module.exports = (req, _res, next) => {
+module.exports = (req, res, next) => {
   const { email, password } = req.body;
   const { error } = Joi.object({
     email: Joi.string().min(1).required(),
@@ -8,7 +8,7 @@ module.exports = (req, _res, next) => {
   }).validate({ email, password });
 
   if (error) {
-    return next(error);
+    return res.status(400).json({ message: 'Some required fields are missing' });
   }
   
   next();
