@@ -21,7 +21,7 @@ const addNewUser = async (displayName, email, password, image) => {
   if (isUserAlreadyRegistered) {
     return {
       error: {
-        code: 'userAlreadyRegistered',
+        code: 'alreadyRegistered',
         message: 'User already registered',
       },
     };
