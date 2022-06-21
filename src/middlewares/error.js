@@ -12,7 +12,7 @@
     }
   
     const statusByErrorCode = {
-     // notFound: 404,
+      notFound: 404,
       userAlreadyRegistered: 409,
       invalidFields: 400,
     };

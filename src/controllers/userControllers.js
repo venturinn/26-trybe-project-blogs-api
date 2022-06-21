@@ -5,47 +5,61 @@ const userServices = require('../services/userServices');
 const secret = process.env.JWT_SECRET;
 
 const validateLogin = async (req, res, next) => {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
 
-   const validadeUser = await userServices.validateLogin(email, password);
+  const validadeUser = await userServices.validateLogin(email, password);
 
-    if (validadeUser.error) return next(validadeUser.error);
+  if (validadeUser.error) return next(validadeUser.error);
 
-    const jwtConfig = {
-        expiresIn: '7d',
-        algorithm: 'HS256',
-      };
-
-    const token = jwt.sign({ data: email }, secret, jwtConfig);
-  
-    res.status(200).json({ token });
+  const jwtConfig = {
+    expiresIn: '7d',
+    algorithm: 'HS256',
   };
 
-  const addNewUser = async (req, res, next) => {
-    const { displayName, email, password, image } = req.body;
+  const token = jwt.sign({ data: email }, secret, jwtConfig);
 
-   const newUserAdded = await userServices.addNewUser(displayName, email, password, image);
+  res.status(200).json({ token });
+};
 
-    if (newUserAdded.error) return next(newUserAdded.error);
+const addNewUser = async (req, res, next) => {
+  const { displayName, email, password, image } = req.body;
 
-    const jwtConfig = {
-        expiresIn: '7d',
-        algorithm: 'HS256',
-      };
+  const newUserAdded = await userServices.addNewUser(
+    displayName,
+    email,
+    password,
+    image,
+  );
 
-    const token = jwt.sign({ data: email }, secret, jwtConfig);
-  
-    res.status(201).json({ token });
+  if (newUserAdded.error) return next(newUserAdded.error);
+
+  const jwtConfig = {
+    expiresIn: '7d',
+    algorithm: 'HS256',
   };
 
-  const getAllUsers = async (_req, res, _next) => {
-   const allUsers = await userServices.getAllUsers();
-  
-    res.status(200).json(allUsers);
-  };
+  const token = jwt.sign({ data: email }, secret, jwtConfig);
 
-  module.exports = {
-    validateLogin,
-    addNewUser,
-    getAllUsers,
-  };
+  res.status(201).json({ token });
+};
+
+const getAllUsers = async (_req, res, _next) => {
+  const allUsers = await userServices.getAllUsers();
+
+  res.status(200).json(allUsers);
+};
+
+const getUserById = async (req, res, next) => {
+  const { id } = req.params;
+  const user = await userServices.getUserById(id);
+
+  if (user.error) return next(user.error);
+  res.status(200).json(user);
+};
+
+module.exports = {
+  validateLogin,
+  addNewUser,
+  getAllUsers,
+  getUserById,
+};

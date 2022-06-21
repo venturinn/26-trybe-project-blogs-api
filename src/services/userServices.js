@@ -49,8 +49,31 @@ const getAllUsers = async () => {
   return allUserWithoutPassword;
 };
 
+const getUserById = async (id) => {
+  const user = await User.findByPk(id);
+
+  if (!user) {
+    return {
+      error: {
+        code: 'notFound',
+        message: 'User does not exist',
+      },
+    };
+  }
+
+  const userWithoutPassword = {
+      id: user.id,
+      displayName: user.displayName,
+      email: user.email,
+      image: user.image,
+  };
+
+  return userWithoutPassword;
+};
+
 module.exports = {
   validateLogin,
   addNewUser,
   getAllUsers,
+  getUserById,
 };

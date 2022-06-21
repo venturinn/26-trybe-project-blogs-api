@@ -15,6 +15,7 @@ const port = process.env.API_PORT || 3000;
 app.post('/login', loginValidate, rescue(userControllers.validateLogin));
 app.post('/user', newUserValidate, rescue(userControllers.addNewUser));
 app.get('/user', tokenValidate, rescue(userControllers.getAllUsers));
+app.get('/user/:id', tokenValidate, rescue(userControllers.getUserById));
 
 app.use(errorMiddleware);
 
