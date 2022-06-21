@@ -19,6 +19,7 @@ app.post('/user', newUserValidate, rescue(userControllers.addNewUser));
 app.get('/user', tokenValidate, rescue(userControllers.getAllUsers));
 app.get('/user/:id', tokenValidate, rescue(userControllers.getUserById));
 
+app.get('/categories', tokenValidate, rescue(categoryControllers.getAllCategories));
 app.post(
   '/categories',
   tokenValidate,
