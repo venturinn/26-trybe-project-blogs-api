@@ -38,7 +38,14 @@ const validateLogin = async (req, res, next) => {
     res.status(201).json({ token });
   };
 
+  const getAllUsers = async (_req, res, _next) => {
+   const allUsers = await userServices.getAllUsers();
+  
+    res.status(200).json(allUsers);
+  };
+
   module.exports = {
     validateLogin,
     addNewUser,
+    getAllUsers,
   };

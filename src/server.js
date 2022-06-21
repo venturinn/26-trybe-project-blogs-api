@@ -6,6 +6,7 @@ const userControllers = require('./controllers/userControllers');
 
 const loginValidate = require('./middlewares/loginValidate');
 const newUserValidate = require('./middlewares/newUserValidate');
+const tokenValidate = require('./middlewares/tokenValidate');
 const errorMiddleware = require('./middlewares/error');
 
 // não remova a variável `API_PORT` ou o `listen`
@@ -13,6 +14,7 @@ const port = process.env.API_PORT || 3000;
 
 app.post('/login', loginValidate, rescue(userControllers.validateLogin));
 app.post('/user', newUserValidate, rescue(userControllers.addNewUser));
+app.get('/user', tokenValidate, rescue(userControllers.getAllUsers));
 
 app.use(errorMiddleware);
 
