@@ -24,12 +24,24 @@ module.exports = {
           key: 'id',
         },
       },
-      published: {
-        type: Sequelize.DATE
+      createdAt: {
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        type: Sequelize.DATE,
+        field:'published',
       },
-      updated: {
-        type: Sequelize.DATE
+      updatedAt: {
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        type: Sequelize.DATE,
+        field:'updated',
       },
+      // published: {
+      //   type: Sequelize.DATE
+      // },
+      // updated: {
+      //   type: Sequelize.DATE
+      // },
     });
   },
   down: async (queryInterface, Sequelize) => {

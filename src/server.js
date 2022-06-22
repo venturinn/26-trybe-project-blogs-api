@@ -4,11 +4,13 @@ const app = require('./api');
 
 const userControllers = require('./controllers/userControllers');
 const categoryControllers = require('./controllers/categoryControllers');
+const postControllers = require('./controllers/postControllers');
 
 const loginValidate = require('./middlewares/loginValidate');
 const newUserValidate = require('./middlewares/newUserValidate');
 const tokenValidate = require('./middlewares/tokenValidate');
 const categoryValidate = require('./middlewares/categoryValidate');
+const postValidate = require('./middlewares/postValidate');
 const errorMiddleware = require('./middlewares/error');
 
 // não remova a variável `API_PORT` ou o `listen`
@@ -18,6 +20,8 @@ app.post('/login', loginValidate, rescue(userControllers.validateLogin));
 app.post('/user', newUserValidate, rescue(userControllers.addNewUser));
 app.get('/user', tokenValidate, rescue(userControllers.getAllUsers));
 app.get('/user/:id', tokenValidate, rescue(userControllers.getUserById));
+
+app.post('/post', tokenValidate, postValidate, rescue(postControllers.addNewBlogPost));
 
 app.get('/categories', tokenValidate, rescue(categoryControllers.getAllCategories));
 app.post(
