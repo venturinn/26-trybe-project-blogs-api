@@ -9,7 +9,14 @@ const addNewBlogPost = async (req, res, next) => {
     if (newBlogPost.error) return next(newBlogPost.error);
     res.status(201).json(newBlogPost);
   };
+
+  const getAllBlogPost = async (_req, res, _next) => {
+    const allBlogPost = await postServices.getAllBlogPost();
+  
+    res.status(200).json(allBlogPost);
+  };
   
   module.exports = {
     addNewBlogPost,
+    getAllBlogPost,
   };

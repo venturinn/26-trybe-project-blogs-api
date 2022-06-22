@@ -2,6 +2,7 @@ const {
   Category,
   BlogPost,
   PostCategory,
+  User,
   sequelize,
 } = require('../database/models');
 
@@ -50,6 +51,18 @@ const addNewBlogPost = async (title, content, categoryIds, userId) => {
   return result;
 };
 
+const getAllBlogPost = async () => {
+    const allBlogPost = await BlogPost.findAll({
+     include: 
+     [{ model: User, as: 'user', attributes: { exclude: ['password'] } }, 
+     { model: Category, as: 'categories', through: { attributes: [] } }], // O porquê do uso do "througt" ainda não está claro!
+
+    });
+  
+    return allBlogPost;
+  };
+
 module.exports = {
   addNewBlogPost,
+  getAllBlogPost,
 };
