@@ -23,6 +23,7 @@ app.get('/user/:id', tokenValidate, rescue(userControllers.getUserById));
 
 app.post('/post', tokenValidate, postValidate, rescue(postControllers.addNewBlogPost));
 app.get('/post', tokenValidate, rescue(postControllers.getAllBlogPost));
+app.get('/post/:id', tokenValidate, rescue(postControllers.getPostById));
 
 app.get('/categories', tokenValidate, rescue(categoryControllers.getAllCategories));
 app.post(
