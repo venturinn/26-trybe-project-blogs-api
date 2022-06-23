@@ -68,7 +68,7 @@ const getPostById = async (id) => {
     include: [
       { model: User, as: 'user', attributes: { exclude: ['password'] } },
       { model: Category, as: 'categories', through: { attributes: [] } },
-    ], 
+    ],
   });
 
   if (!post) {
@@ -83,8 +83,29 @@ const getPostById = async (id) => {
   return post;
 };
 
+const updatePost = async (title, content, id, userId) => {
+  const post = await getPostById(id);
+  if (post.error) return post.error;
+
+  if (post.userId !== userId) {
+    return {
+      error: {
+        code: 'unauthorized',
+        message: 'Unauthorized user',
+      },
+    };
+  }
+
+  await BlogPost.update({ title, content }, { where: { id } });
+
+  const postUpdated = await getPostById(id);
+
+  return postUpdated;
+};
+
 module.exports = {
   addNewBlogPost,
   getAllBlogPost,
   getPostById,
+  updatePost,
 };

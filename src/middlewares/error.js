@@ -15,6 +15,7 @@
       notFound: 404,
       alreadyRegistered: 409,
       invalidFields: 400,
+      unauthorized: 401,
     };
   
     const status = statusByErrorCode[err.code] || 500;
