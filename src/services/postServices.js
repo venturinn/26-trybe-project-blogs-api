@@ -83,9 +83,9 @@ const getPostById = async (id) => {
   return post;
 };
 
-const updatePost = async (title, content, id, userId) => {
+const verifyPost = async (id, userId) => {
   const post = await getPostById(id);
-  if (post.error) return post.error;
+  if (post.error) return post;
 
   if (post.userId !== userId) {
     return {
@@ -96,6 +96,13 @@ const updatePost = async (title, content, id, userId) => {
     };
   }
 
+  return true;
+};
+
+const updatePost = async (title, content, id, userId) => {
+  const isPostValid = await verifyPost(id, userId);
+  if (isPostValid.error) return isPostValid;
+
   await BlogPost.update({ title, content }, { where: { id } });
 
   const postUpdated = await getPostById(id);
@@ -103,9 +110,19 @@ const updatePost = async (title, content, id, userId) => {
   return postUpdated;
 };
 
+const deletePostById = async (id, userId) => {
+  const isPostValid = await verifyPost(id, userId);
+  if (isPostValid.error) return isPostValid;
+
+  const postDeleted = await BlogPost.destroy({ where: { id } });
+
+  return postDeleted;
+};
+
 module.exports = {
   addNewBlogPost,
   getAllBlogPost,
   getPostById,
   updatePost,
+  deletePostById,
 };

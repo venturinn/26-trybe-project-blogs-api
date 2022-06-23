@@ -25,6 +25,7 @@ app.post('/post', tokenValidate, postValidate, rescue(postControllers.addNewBlog
 app.get('/post', tokenValidate, rescue(postControllers.getAllBlogPost));
 app.get('/post/:id', tokenValidate, rescue(postControllers.getPostById));
 app.put('/post/:id', tokenValidate, postValidate, rescue(postControllers.updatePost));
+app.delete('/post/:id', tokenValidate, rescue(postControllers.deletePostById));
 
 app.get('/categories', tokenValidate, rescue(categoryControllers.getAllCategories));
 app.post(

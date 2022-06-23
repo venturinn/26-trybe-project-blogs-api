@@ -30,9 +30,19 @@ const addNewBlogPost = async (req, res, next) => {
     const userId = req.user.dataValues.id;
 
     const updatedPost = await postServices.updatePost(title, content, id, userId);
-  
+
     if (updatedPost.error) return next(updatedPost.error);
     res.status(200).json(updatedPost);
+  };
+
+  const deletePostById = async (req, res, next) => {
+    const { id } = req.params;
+    const userId = req.user.dataValues.id;
+
+    const deletedPost = await postServices.deletePostById(id, userId);
+  
+    if (deletedPost.error) return next(deletedPost.error);
+    res.status(204).json();
   };
 
   module.exports = {
@@ -40,4 +50,5 @@ const addNewBlogPost = async (req, res, next) => {
     getAllBlogPost,
     getPostById,
     updatePost,
+    deletePostById,
   };
