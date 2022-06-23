@@ -62,13 +62,24 @@ const getUserById = async (id) => {
   }
 
   const userWithoutPassword = {
-      id: user.id,
-      displayName: user.displayName,
-      email: user.email,
-      image: user.image,
+    id: user.id,
+    displayName: user.displayName,
+    email: user.email,
+    image: user.image,
   };
 
   return userWithoutPassword;
+};
+
+const deleteUser = async (id) => {
+  let result = {};
+  try {
+    const deletedUser = await User.destroy({ where: { id } });
+    result = deletedUser;
+  } catch (e) {
+    result = { error: { code: 'sequelizeError', message: e.message } };
+  }
+  return result;
 };
 
 module.exports = {
@@ -76,4 +87,5 @@ module.exports = {
   addNewUser,
   getAllUsers,
   getUserById,
+  deleteUser,
 };

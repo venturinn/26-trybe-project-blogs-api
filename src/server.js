@@ -20,6 +20,7 @@ app.post('/login', loginValidate, rescue(userControllers.validateLogin));
 app.post('/user', newUserValidate, rescue(userControllers.addNewUser));
 app.get('/user', tokenValidate, rescue(userControllers.getAllUsers));
 app.get('/user/:id', tokenValidate, rescue(userControllers.getUserById));
+app.delete('/user/me', tokenValidate, rescue(userControllers.deleteUser));
 
 app.post('/post', tokenValidate, postValidate, rescue(postControllers.addNewBlogPost));
 app.get('/post', tokenValidate, rescue(postControllers.getAllBlogPost));
