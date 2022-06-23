@@ -45,10 +45,18 @@ const addNewBlogPost = async (req, res, next) => {
     res.status(204).json();
   };
 
+  const searchPost = async (req, res, _next) => {
+    const { q } = req.query;
+
+    const posts = await postServices.searchPost(q);
+    res.status(200).json(posts);
+  };
+
   module.exports = {
     addNewBlogPost,
     getAllBlogPost,
     getPostById,
     updatePost,
     deletePostById,
+    searchPost,
   };
