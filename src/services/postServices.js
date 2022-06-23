@@ -57,7 +57,12 @@ const getAllBlogPost = async () => {
     include: [
       { model: User, as: 'user', attributes: { exclude: ['password'] } },
       { model: Category, as: 'categories', through: { attributes: [] } },
-    ], // O porquê do uso do "througt" ainda não está claro!
+    ], 
+    attributes: [
+        'id', 'title', 'content', 'userId',
+        ['published', 'published'],
+        ['updated', 'updated'],
+      ],
   });
 
   return allBlogPost;
@@ -70,11 +75,13 @@ const getPostById = async (id) => {
       { model: User, as: 'user', attributes: { exclude: ['password'] } },
       { model: Category, as: 'categories', through: { attributes: [] } },
     ],
+    attributes: ['id', 'title', 'content', 'userId', ['published', 'published'],
+        ['updated', 'updated'],
+      ],
   });
 
   if (!post) {
-    return {
-      error: {
+    return { error: {
         code: 'notFound',
         message: 'Post does not exist',
       },
@@ -129,9 +136,14 @@ const searchPost = async (q) => {
       ],
     },
     include: [
-        { model: User, as: 'user', attributes: { exclude: ['password'] } },
-        { model: Category, as: 'categories', through: { attributes: [] } },
-      ],
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+    attributes: [
+      'id', 'title', 'content', 'userId',
+      ['published', 'published'],
+      ['updated', 'updated'],
+    ],
   });
 
   return posts;
