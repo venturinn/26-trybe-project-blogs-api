@@ -24,7 +24,7 @@ app.delete('/user/me', tokenValidate, rescue(userControllers.deleteUser));
 
 app.post('/post', tokenValidate, postValidate, rescue(postControllers.addNewBlogPost));
 app.get('/post', tokenValidate, rescue(postControllers.getAllBlogPost));
-app.get('/post/:search', tokenValidate, rescue(postControllers.searchPost));
+app.get('/post/search', tokenValidate, rescue(postControllers.searchPost));
 app.get('/post/:id', tokenValidate, rescue(postControllers.getPostById));
 app.put('/post/:id', tokenValidate, postValidate, rescue(postControllers.updatePost));
 app.delete('/post/:id', tokenValidate, rescue(postControllers.deletePostById));
