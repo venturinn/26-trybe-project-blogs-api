@@ -14,7 +14,7 @@ const postValidate = require('./middlewares/postValidate');
 const errorMiddleware = require('./middlewares/error');
 
 // não remova a variável `API_PORT` ou o `listen`
-const port = process.env.API_PORT || 3000;
+const port = process.env.PORT || 3000;
 
 app.post('/login', loginValidate, rescue(userControllers.validateLogin));
 app.post('/user', newUserValidate, rescue(userControllers.addNewUser));
